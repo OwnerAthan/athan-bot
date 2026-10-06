@@ -22,7 +22,7 @@ app.post("/api/chat", async (req, res) => {
     }
 
     const response = await client.responses.create({
-      model: "gpt-5.6-luna",
+      model: "gpt-6-luna",
       instructions: `
 Kamu adalah Athan BOT.
 
