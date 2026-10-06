@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Athan BOT</title>
+<!DOCTYPE html><html lang="id"><head>  <meta charset="UTF-8"><meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 
-  <style>
+«»
+
+  <title>Athan BOT</title>  <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,197 +13,1438 @@
       font-family: Arial, sans-serif;
     }
 
+
     body {
       background: #0b0b0f;
       color: white;
       min-height: 100vh;
+
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
+
     .app {
       width: 100%;
-      max-width: 700px;
-      height: 90vh;
+      max-width: 760px;
+      height: 92vh;
+
       background: #111116;
+
       border: 1px solid #27272f;
       border-radius: 20px;
+
       overflow: hidden;
+
       display: flex;
       flex-direction: column;
     }
 
+
+    /* HEADER */
+
     .header {
-      padding: 18px 20px;
+      padding: 17px 20px;
+
       background: #15151c;
+
       border-bottom: 1px solid #27272f;
+
+      display: flex;
+      align-items: center;
+
+      gap: 12px;
     }
 
+
+    .back-button {
+      display: none;
+
+      width: 38px;
+      height: 38px;
+
+      padding: 0;
+
+      border: none;
+      border-radius: 10px;
+
+      background: #24242c;
+      color: white;
+
+      font-size: 20px;
+
+      cursor: pointer;
+    }
+
+
     .logo {
-      font-size: 22px;
+      font-size: 21px;
       font-weight: bold;
     }
+
 
     .status {
       color: #8d8d99;
       font-size: 13px;
-      margin-top: 4px;
+      margin-top: 3px;
     }
+
+
+    /* HOME */
+
+    .home {
+      flex: 1;
+
+      overflow-y: auto;
+
+      padding: 28px 20px;
+    }
+
+
+    .welcome {
+      padding: 10px 2px 25px;
+    }
+
+
+    .welcome h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+
+    .welcome p {
+      color: #9a9aa6;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+
+    .section-title {
+      font-size: 15px;
+      color: #b4b4bf;
+
+      margin-bottom: 12px;
+
+      font-weight: bold;
+    }
+
+
+    .ai-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 12px;
+    }
+
+
+    .ai-card {
+
+      background: #1a1a22;
+
+      border: 1px solid #292932;
+
+      border-radius: 17px;
+
+      padding: 18px;
+
+      min-height: 145px;
+
+      cursor: pointer;
+
+      transition: 0.2s ease;
+
+      color: white;
+
+      text-align: left;
+    }
+
+
+    .ai-card:hover {
+
+      background: #20202a;
+
+      transform: translateY(-2px);
+
+      border-color: #3a3a46;
+    }
+
+
+    .ai-icon {
+
+      width: 44px;
+      height: 44px;
+
+      border-radius: 13px;
+
+      background: #25252e;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      font-size: 22px;
+
+      margin-bottom: 16px;
+    }
+
+
+    .ai-card h3 {
+
+      font-size: 16px;
+
+      margin-bottom: 7px;
+    }
+
+
+    .ai-card p {
+
+      color: #92929d;
+
+      font-size: 13px;
+
+      line-height: 1.4;
+    }
+
+
+    .assistant-card {
+
+      margin-top: 12px;
+
+      background: #1a1a22;
+
+      border: 1px solid #292932;
+
+      border-radius: 17px;
+
+      padding: 19px;
+
+      cursor: pointer;
+
+      transition: 0.2s ease;
+    }
+
+
+    .assistant-card:hover {
+
+      background: #20202a;
+    }
+
+
+    .assistant-card h3 {
+
+      font-size: 17px;
+
+      margin-bottom: 7px;
+    }
+
+
+    .assistant-card p {
+
+      color: #92929d;
+
+      font-size: 13px;
+    }
+
+
+    /* CHAT */
 
     .chat {
+
       flex: 1;
+
       padding: 20px;
+
       overflow-y: auto;
+
+      display: none;
     }
+
 
     .message {
-      max-width: 85%;
+
+      max-width: 88%;
+
       padding: 12px 15px;
+
       border-radius: 14px;
+
       margin-bottom: 14px;
-      line-height: 1.5;
-      white-space: pre-wrap;
+
+      line-height: 1.55;
+
+      word-wrap: break-word;
     }
 
+
     .bot {
+
       background: #1c1c24;
+
       margin-right: auto;
     }
 
+
     .user {
-      background: #ffffff;
+
+      background: white;
+
       color: #111;
+
       margin-left: auto;
     }
 
-    .input-area {
-      padding: 15px;
-      background: #15151c;
-      border-top: 1px solid #27272f;
+
+    /* MARKDOWN */
+
+    .message strong {
+      font-weight: 700;
+    }
+
+
+    .message em {
+      font-style: italic;
+    }
+
+
+    .message code {
+
+      background: #101016;
+
+      padding: 2px 6px;
+
+      border-radius: 5px;
+
+      font-family: monospace;
+
+      font-size: 13px;
+    }
+
+
+    .message pre {
+
+      background: #0c0c11;
+
+      border: 1px solid #292932;
+
+      padding: 13px;
+
+      border-radius: 10px;
+
+      overflow-x: auto;
+
+      margin-top: 10px;
+
+      margin-bottom: 5px;
+    }
+
+
+    .message pre code {
+
+      background: transparent;
+
+      padding: 0;
+
+      font-size: 13px;
+
+      white-space: pre;
+    }
+
+
+    .message ul {
+
+      padding-left: 20px;
+
+      margin: 8px 0;
+    }
+
+
+    .message ol {
+
+      padding-left: 20px;
+
+      margin: 8px 0;
+    }
+
+
+    /* IMAGE */
+
+    .generated-image {
+
+      display: block;
+
+      width: 100%;
+
+      max-width: 560px;
+
+      border-radius: 14px;
+
+      margin-top: 4px;
+
+      border: 1px solid #30303a;
+    }
+
+
+    .image-actions {
+
       display: flex;
+
+      gap: 8px;
+
+      margin-top: 10px;
+    }
+
+
+    .download-button {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 9px 13px;
+
+      border-radius: 9px;
+
+      background: white;
+
+      color: black;
+
+      text-decoration: none;
+
+      font-size: 13px;
+
+      font-weight: bold;
+    }
+
+
+    /* INPUT */
+
+    .input-area {
+
+      padding: 15px;
+
+      background: #15151c;
+
+      border-top: 1px solid #27272f;
+
+      display: none;
+
       gap: 10px;
     }
 
+
     input {
+
       flex: 1;
+
       padding: 14px;
+
       border-radius: 12px;
+
       border: 1px solid #30303a;
+
       background: #0d0d12;
+
       color: white;
+
       outline: none;
+
+      font-size: 15px;
     }
 
-    button {
+
+    input:focus {
+
+      border-color: #4a4a58;
+    }
+
+
+    .send-button {
+
       border: none;
+
       border-radius: 12px;
+
       padding: 0 20px;
+
       background: white;
+
       color: black;
+
       font-weight: bold;
+
       cursor: pointer;
     }
 
-    button:disabled {
+
+    .send-button:disabled {
+
       opacity: 0.5;
     }
-  </style>
-</head>
 
-<body>
 
-  <div class="app">
+    /* MOBILE */
 
-    <div class="header">
-      <div class="logo">🤖 Athan BOT</div>
-      <div class="status">AI Assistant • Online</div>
+    @media (max-width: 600px) {
+
+      body {
+        align-items: stretch;
+      }
+
+
+      .app {
+
+        max-width: none;
+
+        height: 100vh;
+
+        border-radius: 0;
+
+        border: none;
+      }
+
+
+      .home {
+
+        padding: 24px 16px;
+      }
+
+
+      .welcome h1 {
+
+        font-size: 27px;
+      }
+
+
+      .ai-grid {
+
+        gap: 10px;
+      }
+
+
+      .ai-card {
+
+        padding: 15px;
+
+        min-height: 135px;
+      }
+
+
+      .chat {
+
+        padding: 16px;
+      }
+
+
+      .message {
+
+        max-width: 92%;
+      }
+
+
+      .generated-image {
+
+        max-width: 100%;
+      }
+
+    }
+
+  </style></head><body><div class="app">  <!-- HEADER -->  <div class="header"><button
+  class="back-button"
+  id="backButton"
+  onclick="showHome()"
+>
+  ←
+</button>
+
+
+<div>
+
+  <div
+    class="logo"
+    id="headerTitle"
+  >
+    🤖 Athan BOT
+  </div>
+
+
+  <div
+    class="status"
+    id="headerStatus"
+  >
+    AI Assistant • Online
+  </div>
+
+</div>
+
+  </div>  <!-- HOME -->  <div
+    class="home"
+    id="home"
+  ><div class="welcome">
+
+  <h1>
+    Halo 👋
+  </h1>
+
+
+  <p>
+    Selamat datang di Athan BOT.
+    Pilih AI yang ingin kamu gunakan.
+  </p>
+
+</div>
+
+
+<div class="section-title">
+  Pilih AI
+</div>
+
+
+<div class="ai-grid">
+
+
+  <div
+    class="ai-card"
+    onclick="openChat('image')"
+  >
+
+    <div class="ai-icon">
+      🎨
     </div>
 
-    <div class="chat" id="chat">
-      <div class="message bot">
-        Halo! Saya Athan BOT 👋
-        <br><br>
-        Ada yang bisa saya bantu?
-      </div>
-    </div>
 
-    <div class="input-area">
-      <input
-        id="messageInput"
-        type="text"
-        placeholder="Ketik pesan..."
-        autocomplete="off"
-      >
+    <h3>
+      AI Gambar
+    </h3>
 
-      <button id="sendButton">
-        Kirim
-      </button>
-    </div>
+
+    <p>
+      Buat gambar langsung menggunakan
+      AI Image Generation.
+    </p>
 
   </div>
 
-  <script>
-    const input = document.getElementById("messageInput");
-    const button = document.getElementById("sendButton");
-    const chat = document.getElementById("chat");
 
-    function addMessage(text, type) {
-      const message = document.createElement("div");
-      message.className = "message " + type;
-      message.textContent = text;
 
-      chat.appendChild(message);
-      chat.scrollTop = chat.scrollHeight;
+  <div
+    class="ai-card"
+    onclick="openChat('coding')"
+  >
 
-      return message;
+    <div class="ai-icon">
+      💻
+    </div>
+
+
+    <h3>
+      AI Coding
+    </h3>
+
+
+    <p>
+      Bantu membuat, memperbaiki,
+      dan menjelaskan kode.
+    </p>
+
+  </div>
+
+
+
+  <div
+    class="ai-card"
+    onclick="openChat('curhat')"
+  >
+
+    <div class="ai-icon">
+      💬
+    </div>
+
+
+    <h3>
+      AI Curhat
+    </h3>
+
+
+    <p>
+      Tempat ngobrol dan menuangkan
+      cerita dengan nyaman.
+    </p>
+
+  </div>
+
+
+
+  <div
+    class="ai-card"
+    onclick="openChat('question')"
+  >
+
+    <div class="ai-icon">
+      🧠
+    </div>
+
+
+    <h3>
+      AI Tanya-Tanya
+    </h3>
+
+
+    <p>
+      Tanyakan berbagai hal dan
+      dapatkan penjelasan.
+    </p>
+
+  </div>
+
+
+</div>
+
+
+
+<div
+  class="assistant-card"
+  onclick="openChat('assistant')"
+>
+
+  <h3>
+    🤖 AI Assistant
+  </h3>
+
+
+  <p>
+    Asisten umum Athan BOT untuk
+    berbagai kebutuhan.
+  </p>
+
+</div>
+
+  </div>  <!-- CHAT -->  <div
+    class="chat"
+    id="chat"
+  ></div>  <!-- INPUT -->  <div
+    class="input-area"
+    id="inputArea"
+  ><input
+  id="messageInput"
+  type="text"
+  placeholder="Ketik pesan..."
+  autocomplete="off"
+>
+
+
+<button
+  class="send-button"
+  id="sendButton"
+>
+  Kirim
+</button>
+
+  </div></div><script>
+
+
+const input =
+  document.getElementById(
+    "messageInput"
+  );
+
+
+const button =
+  document.getElementById(
+    "sendButton"
+  );
+
+
+const chat =
+  document.getElementById(
+    "chat"
+  );
+
+
+const home =
+  document.getElementById(
+    "home"
+  );
+
+
+const inputArea =
+  document.getElementById(
+    "inputArea"
+  );
+
+
+const backButton =
+  document.getElementById(
+    "backButton"
+  );
+
+
+const headerTitle =
+  document.getElementById(
+    "headerTitle"
+  );
+
+
+const headerStatus =
+  document.getElementById(
+    "headerStatus"
+  );
+
+
+let currentMode =
+  "assistant";
+
+
+
+const modes = {
+
+  image: {
+    title: "🎨 AI Gambar",
+    status: "Image Generation"
+  },
+
+  coding: {
+    title: "💻 AI Coding",
+    status: "Coding Assistant"
+  },
+
+  curhat: {
+    title: "💬 AI Curhat",
+    status: "Companion Assistant"
+  },
+
+  question: {
+    title: "🧠 AI Tanya-Tanya",
+    status: "General Assistant"
+  },
+
+  assistant: {
+    title: "🤖 AI Assistant",
+    status: "AI Assistant • Online"
+  }
+
+};
+
+
+
+/*
+========================================
+OPEN CHAT
+========================================
+*/
+
+function openChat(mode) {
+
+  currentMode = mode;
+
+  const selected =
+    modes[mode];
+
+
+  home.style.display =
+    "none";
+
+
+  chat.style.display =
+    "block";
+
+
+  inputArea.style.display =
+    "flex";
+
+
+  backButton.style.display =
+    "block";
+
+
+  headerTitle.textContent =
+    selected.title;
+
+
+  headerStatus.textContent =
+    selected.status;
+
+
+  chat.innerHTML =
+    "";
+
+
+  let welcome = "";
+
+
+  if (mode === "image") {
+
+    welcome =
+      "Halo! Saya AI Gambar 🎨<br><br>" +
+      "Tulis gambar yang ingin kamu buat.";
+
+  }
+
+
+  else if (mode === "coding") {
+
+    welcome =
+      "Halo! Saya AI Coding 💻<br><br>" +
+      "Kirim kode atau jelaskan apa yang ingin kamu buat.";
+
+  }
+
+
+  else if (mode === "curhat") {
+
+    welcome =
+      "Halo 👋<br><br>" +
+      "Kamu boleh cerita. Saya akan mendengarkan.";
+
+  }
+
+
+  else if (mode === "question") {
+
+    welcome =
+      "Halo! Saya AI Tanya-Tanya 🧠<br><br>" +
+      "Silakan tanyakan apa saja.";
+
+  }
+
+
+  else {
+
+    welcome =
+      "Halo! Saya Athan BOT 🤖<br><br>" +
+      "Ada yang bisa saya bantu?";
+
+  }
+
+
+  const message =
+    document.createElement(
+      "div"
+    );
+
+
+  message.className =
+    "message bot";
+
+
+  message.innerHTML =
+    welcome;
+
+
+  chat.appendChild(
+    message
+  );
+
+
+  input.focus();
+
+}
+
+
+
+/*
+========================================
+HOME
+========================================
+*/
+
+function showHome() {
+
+  home.style.display =
+    "block";
+
+
+  chat.style.display =
+    "none";
+
+
+  inputArea.style.display =
+    "none";
+
+
+  backButton.style.display =
+    "none";
+
+
+  headerTitle.textContent =
+    "🤖 Athan BOT";
+
+
+  headerStatus.textContent =
+    "AI Assistant • Online";
+
+}
+
+
+
+/*
+========================================
+ESCAPE HTML
+========================================
+*/
+
+function escapeHTML(text) {
+
+  return text
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+
+/*
+========================================
+MARKDOWN RENDERER
+========================================
+*/
+
+function renderMarkdown(text) {
+
+  let safe =
+    escapeHTML(text);
+
+
+  const codeBlocks = [];
+
+
+  safe = safe.replace(
+
+    /```(?:[a-zA-Z0-9_+-]+)?\n?([\s\S]*?)```/g,
+
+    function(
+      match,
+      code
+    ) {
+
+      const index =
+        codeBlocks.length;
+
+
+      codeBlocks.push(
+        code
+      );
+
+
+      return (
+        "@@CODEBLOCK" +
+        index +
+        "@@"
+      );
+
     }
 
-    async function sendMessage() {
-      const text = input.value.trim();
+  );
 
-      if (!text) return;
 
-      addMessage(text, "user");
+  safe = safe.replace(
 
-      input.value = "";
-      button.disabled = true;
+    /\*\*(.*?)\*\*/g,
 
-      const loading = addMessage("Athan sedang berpikir...", "bot");
+    "<strong>$1</strong>"
 
-      try {
-        const response = await fetch("/api/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            message: text
-          })
-        });
+  );
 
-        const data = await response.json();
 
-        loading.textContent =
-          data.reply || data.error || "Terjadi kesalahan.";
+  safe = safe.replace(
 
-      } catch (error) {
-        loading.textContent =
-          "Tidak dapat terhubung ke Athan BOT.";
-      }
+    /(?<!\*)\*([^*]+)\*(?!\*)/g,
 
-      button.disabled = false;
-      input.focus();
+    "<em>$1</em>"
+
+  );
+
+
+  safe = safe.replace(
+
+    /`([^`]+)`/g,
+
+    "<code>$1</code>"
+
+  );
+
+
+  safe = safe.replace(
+
+    /(?:^|\n)- (.*?)(?=\n|$)/g,
+
+    "<li>$1</li>"
+
+  );
+
+
+  safe = safe.replace(
+
+    /(<li>.*?<\/li>)/gs,
+
+    "<ul>$1</ul>"
+
+  );
+
+
+  safe = safe.replace(
+    /\n/g,
+    "<br>"
+  );
+
+
+  codeBlocks.forEach(
+
+    function(
+      code,
+      index
+    ) {
+
+      const block =
+        "<pre><code>" +
+        code +
+        "</code></pre>";  safe =
+    safe.replace(
+
+      "@@CODEBLOCK" +
+      index +
+      "@@",
+
+      block
+
+    );
+
+}
+
+);
+
+return safe;
+
+}
+
+/*
+
+ADD TEXT MESSAGE
+
+*/
+
+function addMessage(
+text,
+type
+) {
+
+const message =
+document.createElement(
+"div"
+);
+
+message.className =
+"message " +
+type;
+
+if (type === "bot") {
+
+message.innerHTML =
+  renderMarkdown(text);
+
+}
+
+else {
+
+message.textContent =
+  text;
+
+}
+
+chat.appendChild(
+message
+);
+
+chat.scrollTop =
+chat.scrollHeight;
+
+return message;
+
+}
+
+/*
+
+ADD IMAGE
+
+*/
+
+function addImageMessage(
+image
+) {
+
+const message =
+document.createElement(
+"div"
+);
+
+message.className =
+"message bot";
+
+const imageElement =
+document.createElement(
+"img"
+);
+
+imageElement.className =
+"generated-image";
+
+imageElement.src =
+image;
+
+imageElement.alt =
+"Gambar yang dibuat Athan BOT";
+
+const actions =
+document.createElement(
+"div"
+);
+
+actions.className =
+"image-actions";
+
+const download =
+document.createElement(
+"a"
+);
+
+download.className =
+"download-button";
+
+download.textContent =
+"⬇ Simpan Gambar";
+
+download.href =
+image;
+
+download.download =
+"athan-bot-image.png";
+
+actions.appendChild(
+download
+);
+
+message.appendChild(
+imageElement
+);
+
+message.appendChild(
+actions
+);
+
+chat.appendChild(
+message
+);
+
+chat.scrollTop =
+chat.scrollHeight;
+
+}
+
+/*
+
+SEND MESSAGE
+
+*/
+
+async function sendMessage() {
+
+const text =
+input.value.trim();
+
+if (!text)
+return;
+
+addMessage(
+text,
+"user"
+);
+
+input.value =
+"";
+
+button.disabled =
+true;
+
+input.disabled =
+true;
+
+const loading =
+addMessage(
+currentMode === "image"
+? "🎨 Sedang membuat gambar..."
+: "Athan sedang berpikir...",
+"bot"
+);
+
+try {
+
+const response =
+  await fetch(
+    "/api/chat",
+    {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type":
+          "application/json"
+      },
+
+      body: JSON.stringify({
+
+        message: text,
+
+        mode: currentMode
+
+      })
+
     }
+  );
 
-    button.addEventListener("click", sendMessage);
 
-    input.addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        sendMessage();
-      }
-    });
-  </script>
+const data =
+  await response.json();
 
-</body>
-  </html>
+
+loading.remove();
+
+
+if (!response.ok) {
+
+  addMessage(
+
+    data.error ||
+    "Terjadi kesalahan.",
+
+    "bot"
+
+  );
+
+  return;
+
+}
+
+
+/*
+IMAGE
+*/
+
+if (
+  data.type === "image" &&
+  data.image
+) {
+
+  addImageMessage(
+    data.image
+  );
+
+}
+
+
+/*
+TEXT
+*/
+
+else {
+
+  addMessage(
+
+    data.reply ||
+    data.error ||
+    "Tidak ada jawaban.",
+
+    "bot"
+
+  );
+
+}
+
+}
+
+catch (error) {
+
+loading.remove();
+
+
+addMessage(
+
+  "Tidak dapat terhubung ke Athan BOT.",
+
+  "bot"
+
+);
+
+}
+
+finally {
+
+button.disabled =
+  false;
+
+input.disabled =
+  false;
+
+input.focus();
+
+}
+
+}
+
+/*
+
+EVENTS
+
+*/
+
+button.addEventListener(
+"click",
+sendMessage
+);
+
+input.addEventListener(
+"keydown",
+function(event) {
+
+if (
+  event.key === "Enter"
+) {
+
+  event.preventDefault();
+
+  sendMessage();
+
+}
+
+}
+);
+
+</script></body></html>
