@@ -1,319 +1,689 @@
-<!DOCTYPE html><html lang="id"><head>  <meta charset="UTF-8"><meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-«»
+  <title>Athan BOT</title>
 
-  <title>Athan BOT</title>  <style>
-
+  <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: Inter, Arial, sans-serif;
     }
 
+    :root {
+      --bg: #09090d;
+      --panel: #111117;
+      --panel-2: #16161e;
+      --card: #17171f;
+      --card-hover: #1c1c26;
+      --border: rgba(255,255,255,.08);
+      --text: #f5f5f7;
+      --muted: #9696a3;
+      --accent: #ffffff;
+    }
 
     body {
-      background: #0b0b0f;
-      color: white;
-      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at 50% -20%,
+          rgba(100,100,130,.14),
+          transparent 45%
+        ),
+        var(--bg);
 
+      color: var(--text);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
 
+    /* =========================
+       APP
+    ========================= */
 
     .app {
+      position: relative;
+
       width: 100%;
-      max-width: 760px;
-      height: 92vh;
+      max-width: 900px;
+      height: 94vh;
 
-      background: #111116;
+      background: rgba(15,15,21,.96);
 
-      border: 1px solid #27272f;
-      border-radius: 20px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
 
       overflow: hidden;
 
       display: flex;
       flex-direction: column;
+
+      box-shadow:
+        0 30px 80px rgba(0,0,0,.45);
     }
 
-
-    /* HEADER */
+    /* =========================
+       HEADER
+    ========================= */
 
     .header {
-      padding: 17px 20px;
+      height: 72px;
+      flex-shrink: 0;
 
-      background: #15151c;
+      padding: 0 20px;
 
-      border-bottom: 1px solid #27272f;
+      background: rgba(17,17,23,.88);
+      backdrop-filter: blur(20px);
+
+      border-bottom: 1px solid var(--border);
 
       display: flex;
       align-items: center;
 
-      gap: 12px;
+      position: relative;
+      z-index: 10;
     }
 
+    .menu-button {
+      width: 42px;
+      height: 42px;
 
-    .back-button {
-      display: none;
+      border: 1px solid var(--border);
+      border-radius: 12px;
 
-      width: 38px;
-      height: 38px;
+      background: rgba(255,255,255,.04);
+      color: white;
 
-      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      cursor: pointer;
+
+      transition: .2s ease;
+    }
+
+    .menu-button:hover {
+      background: rgba(255,255,255,.09);
+      transform: translateY(-1px);
+    }
+
+    .hamburger {
+      width: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hamburger span {
+      width: 100%;
+      height: 2px;
+
+      background: white;
+      border-radius: 10px;
+    }
+
+    .header-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+
+      text-align: center;
+
+      pointer-events: none;
+    }
+
+    .header-title {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -.2px;
+    }
+
+    .status {
+      color: #858592;
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================= */
+
+    .sidebar {
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 290px;
+      height: 100%;
+
+      background:
+        linear-gradient(
+          180deg,
+          #15151d,
+          #101017
+        );
+
+      border-right: 1px solid var(--border);
+
+      z-index: 100;
+
+      transform: translateX(-100%);
+
+      transition:
+        transform .28s cubic-bezier(.4,0,.2,1);
+
+      display: flex;
+      flex-direction: column;
+
+      box-shadow: 20px 0 60px rgba(0,0,0,.35);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-top {
+      height: 82px;
+
+      padding: 18px;
+
+      border-bottom: 1px solid var(--border);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+
+      border-radius: 12px;
+
+      background: linear-gradient(
+        145deg,
+        #30303a,
+        #1b1b23
+      );
+
+      border: 1px solid var(--border);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 20px;
+    }
+
+    .brand-name {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .brand-sub {
+      color: #777783;
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .close-sidebar {
+      width: 36px;
+      height: 36px;
 
       border: none;
       border-radius: 10px;
 
-      background: #24242c;
-      color: white;
+      background: rgba(255,255,255,.05);
+
+      color: #aaa;
 
       font-size: 20px;
 
       cursor: pointer;
     }
 
-
-    .logo {
-      font-size: 21px;
-      font-weight: bold;
+    .close-sidebar:hover {
+      background: rgba(255,255,255,.1);
+      color: white;
     }
 
+    .sidebar-content {
+      flex: 1;
 
-    .status {
-      color: #8d8d99;
+      padding: 18px 12px;
+
+      overflow-y: auto;
+    }
+
+    .menu-label {
+      color: #666672;
+      font-size: 10px;
+      font-weight: 700;
+
+      text-transform: uppercase;
+      letter-spacing: 1px;
+
+      padding: 0 10px;
+      margin: 5px 0 9px;
+    }
+
+    .menu-item {
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 11px 12px;
+
+      border: none;
+      border-radius: 12px;
+
+      background: transparent;
+      color: #bdbdc7;
+
+      cursor: pointer;
+
+      text-align: left;
+
       font-size: 13px;
-      margin-top: 3px;
+
+      transition: .18s ease;
+
+      margin-bottom: 3px;
     }
 
+    .menu-item:hover {
+      background: rgba(255,255,255,.055);
+      color: white;
+    }
 
-    /* HOME */
+    .menu-item.active {
+      background: rgba(255,255,255,.09);
+      color: white;
+    }
+
+    .menu-icon {
+      width: 31px;
+      height: 31px;
+
+      border-radius: 9px;
+
+      background: rgba(255,255,255,.045);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-bottom {
+      padding: 14px;
+
+      border-top: 1px solid var(--border);
+    }
+
+    .sidebar-version {
+      color: #5e5e68;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .sidebar-overlay {
+      position: absolute;
+
+      inset: 0;
+
+      background: rgba(0,0,0,.52);
+
+      backdrop-filter: blur(2px);
+
+      z-index: 90;
+
+      opacity: 0;
+      pointer-events: none;
+
+      transition: .25s ease;
+    }
+
+    .sidebar-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* =========================
+       HOME
+    ========================= */
 
     .home {
       flex: 1;
 
       overflow-y: auto;
 
-      padding: 28px 20px;
+      padding: 55px 40px 40px;
     }
-
 
     .welcome {
-      padding: 10px 2px 25px;
+      max-width: 650px;
+
+      margin: 0 auto 40px;
+
+      text-align: center;
     }
 
+    .welcome-badge {
+      display: inline-flex;
+
+      align-items: center;
+      gap: 7px;
+
+      padding: 7px 12px;
+
+      border-radius: 999px;
+
+      background: rgba(255,255,255,.045);
+
+      border: 1px solid var(--border);
+
+      color: #a3a3ae;
+
+      font-size: 11px;
+
+      margin-bottom: 20px;
+    }
+
+    .online-dot {
+      width: 6px;
+      height: 6px;
+
+      background: #8ee6a5;
+
+      border-radius: 50%;
+
+      box-shadow:
+        0 0 10px rgba(142,230,165,.5);
+    }
 
     .welcome h1 {
-      font-size: 30px;
-      margin-bottom: 10px;
-    }
-
-
-    .welcome p {
-      color: #9a9aa6;
-      font-size: 15px;
-      line-height: 1.5;
-    }
-
-
-    .section-title {
-      font-size: 15px;
-      color: #b4b4bf;
+      font-size: 40px;
+      letter-spacing: -1.4px;
 
       margin-bottom: 12px;
-
-      font-weight: bold;
     }
 
+    .welcome p {
+      color: var(--muted);
+
+      font-size: 14px;
+      line-height: 1.7;
+
+      max-width: 530px;
+      margin: auto;
+    }
+
+    .section-header {
+      max-width: 780px;
+      margin: auto auto 15px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #c5c5cd;
+    }
+
+    .section-count {
+      color: #666671;
+      font-size: 11px;
+    }
 
     .ai-grid {
+      max-width: 780px;
+      margin: auto;
 
       display: grid;
 
       grid-template-columns:
         repeat(2, 1fr);
 
-      gap: 12px;
+      gap: 14px;
     }
 
-
     .ai-card {
+      position: relative;
 
-      background: #1a1a22;
+      min-height: 175px;
 
-      border: 1px solid #292932;
+      padding: 21px;
 
-      border-radius: 17px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.055),
+          rgba(255,255,255,.025)
+        );
 
-      padding: 18px;
+      border: 1px solid var(--border);
 
-      min-height: 145px;
-
-      cursor: pointer;
-
-      transition: 0.2s ease;
+      border-radius: 18px;
 
       color: white;
 
       text-align: left;
-    }
-
-
-    .ai-card:hover {
-
-      background: #20202a;
-
-      transform: translateY(-2px);
-
-      border-color: #3a3a46;
-    }
-
-
-    .ai-icon {
-
-      width: 44px;
-      height: 44px;
-
-      border-radius: 13px;
-
-      background: #25252e;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      font-size: 22px;
-
-      margin-bottom: 16px;
-    }
-
-
-    .ai-card h3 {
-
-      font-size: 16px;
-
-      margin-bottom: 7px;
-    }
-
-
-    .ai-card p {
-
-      color: #92929d;
-
-      font-size: 13px;
-
-      line-height: 1.4;
-    }
-
-
-    .assistant-card {
-
-      margin-top: 12px;
-
-      background: #1a1a22;
-
-      border: 1px solid #292932;
-
-      border-radius: 17px;
-
-      padding: 19px;
 
       cursor: pointer;
 
-      transition: 0.2s ease;
+      overflow: hidden;
+
+      transition:
+        transform .22s ease,
+        border-color .22s ease,
+        background .22s ease;
     }
 
+    .ai-card::after {
+      content: "";
 
-    .assistant-card:hover {
+      position: absolute;
 
-      background: #20202a;
+      width: 120px;
+      height: 120px;
+
+      right: -50px;
+      bottom: -60px;
+
+      background: rgba(255,255,255,.04);
+
+      border-radius: 50%;
+
+      filter: blur(20px);
     }
 
+    .ai-card:hover {
+      transform: translateY(-3px);
 
-    .assistant-card h3 {
+      border-color: rgba(255,255,255,.15);
 
-      font-size: 17px;
+      background: var(--card-hover);
+    }
 
+    .ai-icon {
+      width: 45px;
+      height: 45px;
+
+      border-radius: 13px;
+
+      background: rgba(255,255,255,.055);
+
+      border: 1px solid rgba(255,255,255,.06);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 21px;
+
+      margin-bottom: 20px;
+    }
+
+    .ai-card h3 {
+      font-size: 16px;
       margin-bottom: 7px;
     }
 
+    .ai-card p {
+      color: #858591;
 
-    .assistant-card p {
+      font-size: 12px;
 
-      color: #92929d;
+      line-height: 1.55;
 
-      font-size: 13px;
+      max-width: 250px;
     }
 
+    .assistant-card {
+      max-width: 780px;
 
-    /* CHAT */
+      margin: 14px auto 0;
+
+      padding: 19px 21px;
+
+      border-radius: 18px;
+
+      background:
+        linear-gradient(
+          110deg,
+          rgba(255,255,255,.06),
+          rgba(255,255,255,.025)
+        );
+
+      border: 1px solid var(--border);
+
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+
+      gap: 15px;
+
+      transition: .2s ease;
+    }
+
+    .assistant-card:hover {
+      background: var(--card-hover);
+      border-color: rgba(255,255,255,.15);
+    }
+
+    .assistant-icon {
+      width: 44px;
+      height: 44px;
+
+      flex-shrink: 0;
+
+      border-radius: 12px;
+
+      background: rgba(255,255,255,.055);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 20px;
+    }
+
+    .assistant-info h3 {
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
+
+    .assistant-info p {
+      color: #858591;
+      font-size: 12px;
+    }
+
+    .assistant-arrow {
+      margin-left: auto;
+      color: #666672;
+      font-size: 18px;
+    }
+
+    /* =========================
+       CHAT
+    ========================= */
 
     .chat {
-
       flex: 1;
 
-      padding: 20px;
+      padding: 25px 28px;
 
       overflow-y: auto;
 
       display: none;
     }
 
-
     .message {
+      max-width: 82%;
 
-      max-width: 88%;
+      padding: 13px 16px;
 
-      padding: 12px 15px;
-
-      border-radius: 14px;
+      border-radius: 15px;
 
       margin-bottom: 14px;
 
-      line-height: 1.55;
+      line-height: 1.6;
+
+      font-size: 14px;
 
       word-wrap: break-word;
     }
 
-
     .bot {
+      background: #181820;
 
-      background: #1c1c24;
+      border: 1px solid var(--border);
 
       margin-right: auto;
     }
 
-
     .user {
+      background: #f4f4f5;
 
-      background: white;
-
-      color: #111;
+      color: #101014;
 
       margin-left: auto;
     }
-
-
-    /* MARKDOWN */
 
     .message strong {
       font-weight: 700;
     }
 
-
     .message em {
       font-style: italic;
     }
 
-
     .message code {
-
-      background: #101016;
+      background: #0d0d12;
 
       padding: 2px 6px;
 
@@ -324,29 +694,23 @@ content="width=device-width, initial-scale=1.0"
       font-size: 13px;
     }
 
-
     .message pre {
+      background: #0b0b10;
 
-      background: #0c0c11;
+      border: 1px solid var(--border);
 
-      border: 1px solid #292932;
+      padding: 14px;
 
-      padding: 13px;
-
-      border-radius: 10px;
+      border-radius: 11px;
 
       overflow-x: auto;
 
       margin-top: 10px;
-
       margin-bottom: 5px;
     }
 
-
     .message pre code {
-
       background: transparent;
-
       padding: 0;
 
       font-size: 13px;
@@ -354,57 +718,39 @@ content="width=device-width, initial-scale=1.0"
       white-space: pre;
     }
 
-
-    .message ul {
-
-      padding-left: 20px;
-
-      margin: 8px 0;
-    }
-
-
+    .message ul,
     .message ol {
-
       padding-left: 20px;
-
       margin: 8px 0;
     }
 
-
-    /* IMAGE */
+    /* =========================
+       IMAGE
+    ========================= */
 
     .generated-image {
-
       display: block;
 
       width: 100%;
-
       max-width: 560px;
 
       border-radius: 14px;
 
       margin-top: 4px;
 
-      border: 1px solid #30303a;
+      border: 1px solid var(--border);
     }
 
-
     .image-actions {
-
       display: flex;
-
       gap: 8px;
-
       margin-top: 10px;
     }
 
-
     .download-button {
-
       display: inline-flex;
 
       align-items: center;
-
       justify-content: center;
 
       padding: 9px 13px;
@@ -412,42 +758,38 @@ content="width=device-width, initial-scale=1.0"
       border-radius: 9px;
 
       background: white;
-
       color: black;
 
       text-decoration: none;
 
-      font-size: 13px;
-
-      font-weight: bold;
+      font-size: 12px;
+      font-weight: 700;
     }
 
-
-    /* INPUT */
+    /* =========================
+       INPUT
+    ========================= */
 
     .input-area {
+      padding: 14px 18px;
 
-      padding: 15px;
+      background: rgba(17,17,23,.92);
 
-      background: #15151c;
-
-      border-top: 1px solid #27272f;
+      border-top: 1px solid var(--border);
 
       display: none;
 
-      gap: 10px;
+      gap: 9px;
     }
 
-
     input {
-
       flex: 1;
 
-      padding: 14px;
+      padding: 13px 15px;
 
-      border-radius: 12px;
+      border-radius: 13px;
 
-      border: 1px solid #30303a;
+      border: 1px solid var(--border);
 
       background: #0d0d12;
 
@@ -455,41 +797,189 @@ content="width=device-width, initial-scale=1.0"
 
       outline: none;
 
-      font-size: 15px;
+      font-size: 14px;
     }
-
 
     input:focus {
-
-      border-color: #4a4a58;
+      border-color: rgba(255,255,255,.2);
     }
 
-
     .send-button {
-
       border: none;
 
-      border-radius: 12px;
+      border-radius: 13px;
 
-      padding: 0 20px;
+      padding: 0 19px;
 
       background: white;
-
       color: black;
 
-      font-weight: bold;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition: .18s ease;
+    }
+
+    .send-button:hover {
+      transform: translateY(-1px);
+      background: #e7e7e9;
+    }
+
+    .send-button:disabled {
+      opacity: .5;
+      cursor: default;
+      transform: none;
+    }
+
+    /* =========================
+       SETTINGS MODAL
+    ========================= */
+
+    .settings-modal {
+      position: absolute;
+
+      inset: 0;
+
+      z-index: 150;
+
+      background: rgba(0,0,0,.55);
+
+      backdrop-filter: blur(8px);
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+    }
+
+    .settings-modal.show {
+      display: flex;
+    }
+
+    .settings-box {
+      width: 100%;
+      max-width: 450px;
+
+      background: #15151d;
+
+      border: 1px solid var(--border);
+
+      border-radius: 20px;
+
+      box-shadow: 0 30px 80px rgba(0,0,0,.5);
+
+      overflow: hidden;
+    }
+
+    .settings-head {
+      padding: 20px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .settings-head h2 {
+      font-size: 17px;
+    }
+
+    .settings-close {
+      border: none;
+
+      width: 34px;
+      height: 34px;
+
+      border-radius: 9px;
+
+      background: rgba(255,255,255,.05);
+
+      color: #aaa;
 
       cursor: pointer;
     }
 
+    .setting-row {
+      padding: 17px 20px;
 
-    .send-button:disabled {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-      opacity: 0.5;
+      border-bottom: 1px solid rgba(255,255,255,.045);
     }
 
+    .setting-info h4 {
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
 
-    /* MOBILE */
+    .setting-info p {
+      color: #777783;
+      font-size: 11px;
+    }
+
+    .toggle {
+      width: 42px;
+      height: 23px;
+
+      border-radius: 999px;
+
+      background: #303039;
+
+      padding: 3px;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .toggle span {
+      display: block;
+
+      width: 17px;
+      height: 17px;
+
+      border-radius: 50%;
+
+      background: #aaa;
+
+      transition: .2s;
+    }
+
+    .toggle.active {
+      background: #e9e9eb;
+    }
+
+    .toggle.active span {
+      transform: translateX(19px);
+      background: #111;
+    }
+
+    /* =========================
+       SCROLLBAR
+    ========================= */
+
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #303039;
+      border-radius: 10px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 600px) {
 
@@ -497,391 +987,322 @@ content="width=device-width, initial-scale=1.0"
         align-items: stretch;
       }
 
-
       .app {
+        width: 100%;
+        height: 100vh;
 
         max-width: none;
 
-        height: 100vh;
-
         border-radius: 0;
-
         border: none;
+
+        box-shadow: none;
       }
 
+      .header {
+        height: 66px;
+        padding: 0 15px;
+      }
+
+      .menu-button {
+        width: 40px;
+        height: 40px;
+      }
+
+      .header-title {
+        font-size: 16px;
+      }
 
       .home {
-
-        padding: 24px 16px;
+        padding: 38px 16px 30px;
       }
 
+      .welcome {
+        margin-bottom: 32px;
+      }
 
       .welcome h1 {
-
-        font-size: 27px;
+        font-size: 31px;
       }
 
+      .welcome p {
+        font-size: 13px;
+      }
 
       .ai-grid {
-
+        grid-template-columns: repeat(2, 1fr);
         gap: 10px;
       }
 
-
       .ai-card {
-
-        padding: 15px;
-
-        min-height: 135px;
-      }
-
-
-      .chat {
-
+        min-height: 155px;
         padding: 16px;
       }
 
+      .ai-card h3 {
+        font-size: 14px;
+      }
+
+      .ai-card p {
+        font-size: 11px;
+      }
+
+      .assistant-card {
+        padding: 16px;
+      }
+
+      .sidebar {
+        width: 285px;
+      }
+
+      .chat {
+        padding: 18px 15px;
+      }
 
       .message {
-
-        max-width: 92%;
+        max-width: 90%;
+        font-size: 13px;
       }
 
-
-      .generated-image {
-
-        max-width: 100%;
+      .input-area {
+        padding: 10px;
       }
 
+      input {
+        min-width: 0;
+      }
+
+      .send-button {
+        padding: 0 15px;
+      }
     }
 
-  </style></head><body><div class="app">  <!-- HEADER -->  <div class="header"><button
-  class="back-button"
-  id="backButton"
-  onclick="showHome()"
->
-  ←
-</button>
+    @media (max-width: 370px) {
 
+      .ai-card {
+        min-height: 150px;
+        padding: 13px;
+      }
 
-<div>
+      .ai-icon {
+        width: 40px;
+        height: 40px;
+      }
 
-  <div
-    class="logo"
-    id="headerTitle"
-  >
-    🤖 Athan BOT
-  </div>
+      .welcome h1 {
+        font-size: 27px;
+      }
+    }
+  </style>
+</head>
 
+<body>
 
-  <div
-    class="status"
-    id="headerStatus"
-  >
-    AI Assistant • Online
-  </div>
+<div class="app">
 
-</div>
+  <!-- =========================
+       SIDEBAR
+  ========================== -->
 
-  </div>  <!-- HOME -->  <div
-    class="home"
-    id="home"
-  ><div class="welcome">
+  <aside class="sidebar" id="sidebar">
 
-  <h1>
-    Halo 👋
-  </h1>
+    <div class="sidebar-top">
 
+      <div class="brand">
 
-  <p>
-    Selamat datang di Athan BOT.
-    Pilih AI yang ingin kamu gunakan.
-  </p>
+        <div class="brand-icon">
+          🤖
+        </div>
 
-</div>
+        <div>
+          <div class="brand-name">
+            Athan BOT
+          </div>
 
+          <div class="brand-sub">
+            AI Assistant
+          </div>
+        </div>
 
-<div class="section-title">
-  Pilih AI
-</div>
+      </div>
 
+      <button
+        class="close-sidebar"
+        onclick="closeSidebar()"
+      >
+        ×
+      </button>
 
-<div class="ai-grid">
-
-
-  <div
-    class="ai-card"
-    onclick="openChat('image')"
-  >
-
-    <div class="ai-icon">
-      🎨
     </div>
 
 
-    <h3>
-      AI Gambar
-    </h3>
+    <div class="sidebar-content">
+
+      <div class="menu-label">
+        Menu
+      </div>
+
+      <button
+        class="menu-item active"
+        onclick="showHome(); closeSidebar();"
+      >
+
+        <span class="menu-icon">⌂</span>
+
+        <span>Beranda</span>
+
+      </button>
 
 
-    <p>
-      Buat gambar langsung menggunakan
-      AI Image Generation.
-    </p>
-
-  </div>
+      <div class="menu-label">
+        AI
+      </div>
 
 
+      <button
+        class="menu-item"
+        onclick="openChatFromMenu('assistant')"
+      >
 
-  <div
-    class="ai-card"
-    onclick="openChat('coding')"
-  >
+        <span class="menu-icon">🤖</span>
 
-    <div class="ai-icon">
-      💻
+        <span>AI Assistant</span>
+
+      </button>
+
+
+      <button
+        class="menu-item"
+        onclick="openChatFromMenu('image')"
+      >
+
+        <span class="menu-icon">🎨</span>
+
+        <span>AI Gambar</span>
+
+      </button>
+
+
+      <button
+        class="menu-item"
+        onclick="openChatFromMenu('coding')"
+      >
+
+        <span class="menu-icon">💻</span>
+
+        <span>AI Coding</span>
+
+      </button>
+
+
+      <button
+        class="menu-item"
+        onclick="openChatFromMenu('curhat')"
+      >
+
+        <span class="menu-icon">💬</span>
+
+        <span>AI Curhat</span>
+
+      </button>
+
+
+      <button
+        class="menu-item"
+        onclick="openChatFromMenu('question')"
+      >
+
+        <span class="menu-icon">🧠</span>
+
+        <span>AI Tanya-Tanya</span>
+
+      </button>
+
+
+      <div class="menu-label" style="margin-top:22px;">
+        Sistem
+      </div>
+
+
+      <button
+        class="menu-item"
+        onclick="openSettings()"
+      >
+
+        <span class="menu-icon">⚙️</span>
+
+        <span>Settings</span>
+
+      </button>
+
+
+      <button
+        class="menu-item"
+        onclick="showAbout()"
+      >
+
+        <span class="menu-icon">ⓘ</span>
+
+        <span>Tentang Athan BOT</span>
+
+      </button>
+
     </div>
 
 
-    <h3>
-      AI Coding
-    </h3>
+    <div class="sidebar-bottom">
 
+      <div class="sidebar-version">
+        Athan BOT • v1.0
+      </div>
 
-    <p>
-      Bantu membuat, memperbaiki,
-      dan menjelaskan kode.
-    </p>
+    </div>
 
-  </div>
-
+  </aside>
 
 
   <div
-    class="ai-card"
-    onclick="openChat('curhat')"
-  >
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+    onclick="closeSidebar()"
+  ></div>
 
-    <div class="ai-icon">
-      💬
-    </div>
 
+  <!-- =========================
+       HEADER
+  ========================== -->
 
-    <h3>
-      AI Curhat
-    </h3>
+  <header class="header">
 
+    <button
+      class="menu-button"
+      onclick="openSidebar()"
+      aria-label="Buka menu"
+    >
 
-    <p>
-      Tempat ngobrol dan menuangkan
-      cerita dengan nyaman.
-    </p>
+      <span class="hamburger">
 
-  </div>
+        <span></span>
+        <span></span>
+        <span></span>
 
+      </span>
 
+    </button>
 
-  <div
-    class="ai-card"
-    onclick="openChat('question')"
-  >
 
-    <div class="ai-icon">
-      🧠
-    </div>
+    <div class="header-center">
 
+      <div
+        class="header-title"
+        id="headerTitle"
+      >
+        Athan BOT
+      </div>
 
-    <h3>
-      AI Tanya-Tanya
-    </h3>
-
-
-    <p>
-      Tanyakan berbagai hal dan
-      dapatkan penjelasan.
-    </p>
-
-  </div>
-
-
-</div>
-
-
-
-<div
-  class="assistant-card"
-  onclick="openChat('assistant')"
->
-
-  <h3>
-    🤖 AI Assistant
-  </h3>
-
-
-  <p>
-    Asisten umum Athan BOT untuk
-    berbagai kebutuhan.
-  </p>
-
-</div>
-
-  </div>  <!-- CHAT -->  <div
-    class="chat"
-    id="chat"
-  ></div>  <!-- INPUT -->  <div
-    class="input-area"
-    id="inputArea"
-  ><input
-  id="messageInput"
-  type="text"
-  placeholder="Ketik pesan..."
-  autocomplete="off"
->
-
-
-<button
-  class="send-button"
-  id="sendButton"
->
-  Kirim
-</button>
-
-  </div></div><script>
-
-
-const input =
-  document.getElementById(
-    "messageInput"
-  );
-
-
-const button =
-  document.getElementById(
-    "sendButton"
-  );
-
-
-const chat =
-  document.getElementById(
-    "chat"
-  );
-
-
-const home =
-  document.getElementById(
-    "home"
-  );
-
-
-const inputArea =
-  document.getElementById(
-    "inputArea"
-  );
-
-
-const backButton =
-  document.getElementById(
-    "backButton"
-  );
-
-
-const headerTitle =
-  document.getElementById(
-    "headerTitle"
-  );
-
-
-const headerStatus =
-  document.getElementById(
-    "headerStatus"
-  );
-
-
-let currentMode =
-  "assistant";
-
-
-
-const modes = {
-
-  image: {
-    title: "🎨 AI Gambar",
-    status: "Image Generation"
-  },
-
-  coding: {
-    title: "💻 AI Coding",
-    status: "Coding Assistant"
-  },
-
-  curhat: {
-    title: "💬 AI Curhat",
-    status: "Companion Assistant"
-  },
-
-  question: {
-    title: "🧠 AI Tanya-Tanya",
-    status: "General Assistant"
-  },
-
-  assistant: {
-    title: "🤖 AI Assistant",
-    status: "AI Assistant • Online"
-  }
-
-};
-
-
-
-/*
-========================================
-OPEN CHAT
-========================================
-*/
-
-function openChat(mode) {
-
-  currentMode = mode;
-
-  const selected =
-    modes[mode];
-
-
-  home.style.display =
-    "none";
-
-
-  chat.style.display =
-    "block";
-
-
-  inputArea.style.display =
-    "flex";
-
-
-  backButton.style.display =
-    "block";
-
-
-  headerTitle.textContent =
-    selected.title;
-
-
-  headerStatus.textContent =
-    selected.status;
-
-
-  chat.innerHTML =
-    "";
-
-
-  let welcome = "";
-
-
-  if (mode === "image") {
-
-    welcome =
-      "Halo! Saya AI Gambar 🎨<br><br>" +
+      <div
+        class="status"
+        id="headeralo! Saya AI Gambar 🎨<br><br>" +
       "Tulis gambar yang ingin kamu buat.";
 
   }
